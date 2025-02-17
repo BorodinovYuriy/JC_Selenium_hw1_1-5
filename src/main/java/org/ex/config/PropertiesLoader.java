@@ -1,7 +1,6 @@
-package config;
+package org.ex.config;
 
 import lombok.extern.slf4j.Slf4j;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -10,20 +9,27 @@ import java.util.Properties;
 public class PropertiesLoader {
     private static final String PROPERTIES_FILE = "application.properties";
     private static final Properties properties = new Properties();
+
     static {
         loadProperties();
     }
     private static void loadProperties() {
-        try (InputStream input = PropertiesLoader.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE)) {
+        try (InputStream input = PropertiesLoader.class.getClassLoader()
+                .getResourceAsStream(PROPERTIES_FILE)) {
             if (input == null) {
-                log.error("Не удалось найти файл пропертей: " + PROPERTIES_FILE);
+                log.error("Не удалось найти файл конфигурации: "
+                        + PROPERTIES_FILE);
                 return;
             }
             properties.load(input);
 
         } catch (IOException ex) {
-            log.error("Ошибка при загрузке конфигурации: " + PROPERTIES_FILE + " - {}", ex.getMessage());
+            log.error("Ошибка при загрузке конфигурации: "
+                    + PROPERTIES_FILE + " - {}", ex.getMessage());
         }
+    }
+
+    private PropertiesLoader() {
     }
 
     public static String getBaseURI() {
