@@ -1,6 +1,7 @@
 package tests.javacode.test;
 
 import lombok.extern.slf4j.Slf4j;
+import org.ex.config.TimingExtension;
 import org.ex.pages.pages.InterviewPage;
 import org.ex.pages.pages.ModulePage;
 import org.ex.pages.pages.QuestionPage;
@@ -9,11 +10,13 @@ import org.ex.utills.TestData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebElement;
 import tests.javacode.base.BaseUIJC;
 
 import java.util.List;
 
+@ExtendWith(TimingExtension.class)
 @Slf4j
 class TestUIJS extends BaseUIJC {
 

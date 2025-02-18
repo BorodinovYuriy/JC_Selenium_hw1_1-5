@@ -4,8 +4,8 @@ import java.time.Duration;
 
 public enum WaitingConfig {
 
-    IMPLICIT_WAIT(2),
-    PAGE_LOAD_TIMEOUT(8),
+    IMPLICIT_WAIT(4),
+    PAGE_LOAD_TIMEOUT(10),
     SCRIPT_TIMEOUT(4),
     WAITING_TIMEOUT(20);
 
