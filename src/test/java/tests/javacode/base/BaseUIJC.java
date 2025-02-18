@@ -2,6 +2,7 @@ package tests.javacode.base;
 
 import lombok.extern.slf4j.Slf4j;
 import org.ex.config.PropertiesLoader;
+import org.ex.config.WaitingConfig;
 import org.ex.pages.base.BasePage;
 import org.ex.pages.base.Root;
 import org.ex.pages.base.BeforeLogin;
@@ -22,9 +23,12 @@ public class BaseUIJC {
 
         webDriver = new FirefoxDriver();
 
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
-        webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(6));
-        webDriver.manage().timeouts().scriptTimeout(Duration.ofSeconds(4));
+        webDriver.manage().timeouts()
+                .implicitlyWait(WaitingConfig.IMPLICIT_WAIT.getDuration());
+        webDriver.manage().timeouts()
+                .pageLoadTimeout(WaitingConfig.PAGE_LOAD_TIMEOUT.getDuration());
+        webDriver.manage().timeouts()
+                .scriptTimeout(WaitingConfig.SCRIPT_TIMEOUT.getDuration());
 
         webDriver.manage().window().maximize();
         before();

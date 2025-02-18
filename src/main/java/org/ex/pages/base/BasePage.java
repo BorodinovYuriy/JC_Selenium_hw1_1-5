@@ -2,6 +2,7 @@ package org.ex.pages.base;
 
 import lombok.extern.slf4j.Slf4j;
 import org.ex.config.PropertiesLoader;
+import org.ex.config.WaitingConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -32,8 +33,10 @@ public class BasePage {
     public BasePage(WebDriver webDriver){
         this.webDriver = webDriver;
         this.baseUrl = PropertiesLoader.getBaseURI();
-        this.waitIt = new WebDriverWait(webDriver, Duration.ofSeconds(20));
 
+        this.waitIt = new WebDriverWait(
+                webDriver,
+                WaitingConfig.WAITING_TIMEOUT.getDuration());
 
         this.loading =  By.xpath("//*[contains(text(), 'Loading')]");
         this.rows =  By.xpath("//div[@class = 'table-responsive']//tbody/tr");

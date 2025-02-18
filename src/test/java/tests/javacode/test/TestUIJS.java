@@ -2,6 +2,7 @@ package tests.javacode.test;
 
 import lombok.extern.slf4j.Slf4j;
 import org.ex.pages.pages.InterviewPage;
+import org.ex.pages.pages.ModulePage;
 import org.ex.pages.pages.QuestionPage;
 import org.ex.pages.pages.QuizPage;
 import org.ex.utills.TestData;
@@ -78,6 +79,27 @@ class TestUIJS extends BaseUIJC {
                 "Созданного квиза не найдено в списке квизов на странице!");
 
         log.info("Добавление нового квиза - passed");
+    }
+    @Test
+    @DisplayName("Добавление нового модуля")
+    void addNewModule() {
+        ModulePage module = new ModulePage(webDriver);
+        String randomWords = TestData.makeWords();
+
+        basePage.waitLoading();
+
+        root.clickOnModuleLink();
+
+        List<WebElement> createdNewQuiz = module
+                .addNewClick()
+                .createModule(randomWords)
+                .getRows();
+
+        Assertions.assertTrue(
+                module.checkCreate(createdNewQuiz,randomWords),
+                "Созданного модуля не найдено в списке модулей на странице!");
+
+        log.info("Добавление нового модуля - passed");
     }
 
 

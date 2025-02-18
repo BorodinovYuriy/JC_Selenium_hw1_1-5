@@ -18,15 +18,15 @@ public class QuestionPage extends BasePage {
         PageFactory.initElements(webDriver, this);
     }
 
+    public QuestionPage addNewClick() {
+        clickOnAddButton();
+        return this;
+    }
+
     public QuestionPage createQuestion(String question){
         waitIt.until(ExpectedConditions
                 .visibilityOf(textArea)).sendKeys(question);
         clickOnCreateButton();
-        return this;
-    }
-
-    public QuestionPage addNewClick() {
-        clickOnAddButton();
         return this;
     }
 }
