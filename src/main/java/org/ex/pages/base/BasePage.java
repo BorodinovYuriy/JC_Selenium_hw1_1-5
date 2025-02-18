@@ -10,7 +10,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.List;
 
 @Slf4j
@@ -26,7 +25,6 @@ public class BasePage {
 
     @FindBy(xpath = "//div[@class = 'modalContent afade']//button[text() = 'Создать']")
     private WebElement createButton;
-
 
     private final By rows;
 

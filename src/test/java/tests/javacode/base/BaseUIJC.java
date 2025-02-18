@@ -4,13 +4,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.ex.config.PropertiesLoader;
 import org.ex.config.WaitingConfig;
 import org.ex.pages.base.BasePage;
-import org.ex.pages.base.Root;
 import org.ex.pages.base.BeforeLogin;
-import org.junit.jupiter.api.*;
+import org.ex.pages.base.Root;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-
-import java.time.Duration;
 @Slf4j
 public class BaseUIJC {
     protected static WebDriver webDriver;
@@ -47,6 +50,10 @@ public class BaseUIJC {
         before.getLoginField().sendKeys(PropertiesLoader.getUsername());
         before.getPasswordField().sendKeys(PropertiesLoader.getPassword());
         before.getLoginButton().click();
+
+        WebElement profile = webDriver.findElement(By.xpath("//div[@class = 'menuProfile']"));
+        Assertions.assertNotNull(profile,"Профиль администратора не загрузился!");
+        log.info("Авторизация на портале - passed");
     }
 
     @AfterAll
