@@ -83,6 +83,7 @@ class TestUIJS extends BaseUIJC {
 
         log.info("Добавление нового квиза - passed");
     }
+    //todo доделать согласно требованиям из экселя!
     @Test
     @DisplayName("Добавление нового модуля")
     void addNewModule() {
@@ -104,6 +105,30 @@ class TestUIJS extends BaseUIJC {
 
         log.info("Добавление нового модуля - passed");
     }
+    @Test
+    @DisplayName("Создание нового курса")
+    void addNewCurse(){
 
+    }
+    //todo воспользоваться Гуглдоком!!! и Параметризовать
+    @Test
+    @DisplayName("Создание нового пользователя")
+    void addNewUser(){
+
+    }
+    @Test
+    @DisplayName("Создание нового экзамена")
+    void addNewExam(){
+
+    }
+    @Test
+    @DisplayName("Создание голосовой записи")
+    void addNewVoiceRecording(){
+
+    }
+    //todo воспользоваться Гуглдоком!!! и Параметризовать
+    @Test
+    @DisplayName("Редактирование интервью")
+    void editInterview() {}
 
 }
