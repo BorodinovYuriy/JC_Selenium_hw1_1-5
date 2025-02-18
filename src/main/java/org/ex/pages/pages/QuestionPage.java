@@ -7,33 +7,25 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class InterviewPage extends BasePage {
 
+public class QuestionPage extends BasePage {
 
+    @FindBy(xpath = "//div[@class = 'w-md-editor-text']/textarea")
+    WebElement textArea;
 
-    @FindBy(xpath = "//div[@class = 'modalContent afade']//input[@type = 'input']")
-    private WebElement createInterviewInput;
-
-
-
-
-    public InterviewPage(WebDriver webDriver) {
+    public QuestionPage(WebDriver webDriver) {
         super(webDriver);
         PageFactory.initElements(webDriver, this);
     }
-
-
-
-    public InterviewPage addNewClick() {
-        clickOnAddButton();
-        return this;
-    }
-    public InterviewPage createNewInterview(String interviewName) {
+    public QuestionPage createQuestion(String question){
         waitIt.until(ExpectedConditions
-                .visibilityOf(createInterviewInput)).sendKeys(interviewName);
+                .visibilityOf(textArea)).sendKeys(question);
         clickOnCreateButton();
         return this;
     }
 
-
+    public QuestionPage addNewClick() {
+        clickOnAddButton();
+        return this;
+    }
 }

@@ -3,8 +3,8 @@ package tests.javacode.base;
 import lombok.extern.slf4j.Slf4j;
 import org.ex.config.PropertiesLoader;
 import org.ex.pages.base.BasePage;
-import org.ex.pages.pages.AfterLogin;
-import org.ex.pages.pages.BeforeLogin;
+import org.ex.pages.base.Root;
+import org.ex.pages.base.BeforeLogin;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -13,12 +13,11 @@ import java.time.Duration;
 @Slf4j
 public class BaseUIJC {
     protected static WebDriver webDriver;
-
-    public BasePage basePage;
-    protected AfterLogin afterLogin;
-
+    protected static BasePage basePage;
+    protected static Root root;
 
     @BeforeAll
+    @DisplayName("Авторизация на портале")
     public static void setup() {
 
         webDriver = new FirefoxDriver();
@@ -28,12 +27,12 @@ public class BaseUIJC {
         webDriver.manage().timeouts().scriptTimeout(Duration.ofSeconds(10));
 
         webDriver.manage().window().maximize();
+        before();
     }
 
-    @BeforeEach
-    @DisplayName("Авторизация на портале")
-    public void before() {
+    private static void before() {
         basePage = new BasePage(webDriver);
+        root = new Root(webDriver);
         basePage.openPage();
         log.info("Вход: {}", webDriver.getTitle());
         Assertions.assertNotNull(
@@ -44,13 +43,7 @@ public class BaseUIJC {
         before.getLoginField().sendKeys(PropertiesLoader.getUsername());
         before.getPasswordField().sendKeys(PropertiesLoader.getPassword());
         before.getLoginButton().click();
-
-        afterLogin = new AfterLogin(webDriver);
-        afterLogin.waitSetTable();
-        Assertions.assertTrue(afterLogin.tableIsVisible());
-        log.info("Вход admin выполнен _ @BeforeEach");
     }
-
 
     @AfterAll
     public static void tearDown() {
