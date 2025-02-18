@@ -33,6 +33,8 @@ public class BasePage {
         this.webDriver = webDriver;
         this.baseUrl = PropertiesLoader.getBaseURI();
         this.waitIt = new WebDriverWait(webDriver, Duration.ofSeconds(20));
+
+
         this.loading =  By.xpath("//*[contains(text(), 'Loading')]");
         this.rows =  By.xpath("//div[@class = 'table-responsive']//tbody/tr");
     }
@@ -56,7 +58,7 @@ public class BasePage {
                                 .getText().contains(wordContains));
     }
     public List<WebElement> getRows(){
-        sleepSec(2);
+        waitLoading();
         return webDriver.findElements(rows);
     }
     public void sleepSec(int sec){

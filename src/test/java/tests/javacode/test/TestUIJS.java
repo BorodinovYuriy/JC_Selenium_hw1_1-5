@@ -3,11 +3,11 @@ package tests.javacode.test;
 import lombok.extern.slf4j.Slf4j;
 import org.ex.pages.pages.InterviewPage;
 import org.ex.pages.pages.QuestionPage;
+import org.ex.pages.pages.QuizPage;
 import org.ex.utills.TestData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import tests.javacode.base.BaseUIJC;
 
@@ -54,9 +54,30 @@ class TestUIJS extends BaseUIJC {
 
         Assertions.assertTrue(
                 question.checkCreate(createdNewQuestion,randomWords),
-                "Созданного интервью не найдено в списке интервью на странице!");
+                "Созданного вопроса не найдено в списке вопросов на странице!");
 
         log.info("Добавление нового вопроса - passed");
+    }
+    @Test
+    @DisplayName("Добавление нового квиза")
+    void addNewQuiz() {
+        QuizPage quiz = new QuizPage(webDriver);
+        String randomWords = TestData.makeWords();
+
+        basePage.waitLoading();
+
+        root.clickOnQuizLink();
+
+        List<WebElement> createdNewQuiz = quiz
+                .addNewClick()
+                .createQuiz(randomWords)
+                .getRows();
+
+        Assertions.assertTrue(
+                quiz.checkCreate(createdNewQuiz,randomWords),
+                "Созданного квиза не найдено в списке квизов на странице!");
+
+        log.info("Добавление нового квиза - passed");
     }
 
 

@@ -9,20 +9,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class InterviewPage extends BasePage {
 
-
-
     @FindBy(xpath = "//div[@class = 'modalContent afade']//input[@type = 'input']")
     private WebElement createInterviewInput;
-
-
-
 
     public InterviewPage(WebDriver webDriver) {
         super(webDriver);
         PageFactory.initElements(webDriver, this);
     }
-
-
 
     public InterviewPage addNewClick() {
         clickOnAddButton();
@@ -34,6 +27,4 @@ public class InterviewPage extends BasePage {
         clickOnCreateButton();
         return this;
     }
-
-
 }

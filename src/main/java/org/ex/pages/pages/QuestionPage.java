@@ -17,6 +17,7 @@ public class QuestionPage extends BasePage {
         super(webDriver);
         PageFactory.initElements(webDriver, this);
     }
+
     public QuestionPage createQuestion(String question){
         waitIt.until(ExpectedConditions
                 .visibilityOf(textArea)).sendKeys(question);

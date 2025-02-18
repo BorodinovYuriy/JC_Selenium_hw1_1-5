@@ -14,7 +14,7 @@ public class Root extends BasePage {
     private WebElement questionLink;
 
     @FindBy(xpath = "//a[@href = '/quizes' and text() = 'Квизы']")
-    private WebElement quizeLink;
+    private WebElement quizLink;
 
     @FindBy(xpath = "//a[@href = '/course-module' and text() = 'Модули']")
     private WebElement moduleLink;
@@ -30,8 +30,8 @@ public class Root extends BasePage {
     public void clickOnQuestionLink() {
         questionLink.click();
     }
-    public void clickOnQuizeLink() {
-        quizeLink.click();
+    public void clickOnQuizLink() {
+        quizLink.click();
     }
     public void clickOnModuleLink() {
         moduleLink.click();

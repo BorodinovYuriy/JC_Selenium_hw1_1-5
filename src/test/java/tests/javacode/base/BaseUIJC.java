@@ -22,9 +22,9 @@ public class BaseUIJC {
 
         webDriver = new FirefoxDriver();
 
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
-        webDriver.manage().timeouts().scriptTimeout(Duration.ofSeconds(10));
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
+        webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(6));
+        webDriver.manage().timeouts().scriptTimeout(Duration.ofSeconds(4));
 
         webDriver.manage().window().maximize();
         before();
