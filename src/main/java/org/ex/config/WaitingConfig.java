@@ -6,7 +6,7 @@ public enum WaitingConfig {
 
     IMPLICIT_WAIT(4),
     PAGE_LOAD_TIMEOUT(10),
-    SCRIPT_TIMEOUT(4),
+    SCRIPT_TIMEOUT(6),
     WAITING_TIMEOUT(20);
 
     private final int seconds;

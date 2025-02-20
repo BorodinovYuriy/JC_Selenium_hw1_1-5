@@ -20,11 +20,9 @@ public class BasePage {
     protected String baseUrl;
     private final By loading;
 
-    @FindBy(xpath = "//button[@type = 'button' and text() = '+ Добавить']")
-    private WebElement addButton;
 
-    @FindBy(xpath = "//div[@class = 'modalContent afade']//button[text() = 'Создать']")
-    private WebElement createButton;
+    private final By addButton;
+    private final By createButton;
 
     private final By rows;
 
@@ -38,6 +36,8 @@ public class BasePage {
 
         this.loading =  By.xpath("//*[contains(text(), 'Loading')]");
         this.rows =  By.xpath("//div[@class = 'table-responsive']//tbody/tr");
+        this.createButton = By.xpath("//div[@class = 'modalContent afade']//button[text() = 'Создать']");
+        this.addButton = By.xpath("//button[@type = 'button' and text() = '+ Добавить']");
     }
 
     public void openPage(){
@@ -50,7 +50,7 @@ public class BasePage {
         waitIt.until(ExpectedConditions.elementToBeClickable(addButton)).click();
     }
     public void clickOnCreateButton(){
-        createButton.click();
+        waitIt.until(ExpectedConditions.elementToBeClickable(createButton)).click();
     }
     public boolean checkCreate(List<WebElement> list, String wordContains) {
         return list.stream()

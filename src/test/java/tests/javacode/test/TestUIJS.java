@@ -2,19 +2,19 @@ package tests.javacode.test;
 
 import lombok.extern.slf4j.Slf4j;
 import org.ex.config.TimingExtension;
-import org.ex.pages.pages.InterviewPage;
-import org.ex.pages.pages.ModulePage;
-import org.ex.pages.pages.QuestionPage;
-import org.ex.pages.pages.QuizPage;
-import org.ex.utills.TestData;
+import org.ex.pages.pages.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.openqa.selenium.WebElement;
 import tests.javacode.base.BaseUIJC;
 
 import java.util.List;
+
+import static org.ex.utils.base.StaticBaseUtils.FAKER;
 
 @ExtendWith(TimingExtension.class)
 @Slf4j
@@ -24,7 +24,7 @@ class TestUIJS extends BaseUIJC {
     @DisplayName("Добавление нового интервью")
     void addNewInterview() {
         InterviewPage interview = new InterviewPage(webDriver);
-        String randomWords = TestData.makeWords();
+        String randomWords = FAKER.lorem().sentence(5);
 
         basePage.waitLoading();
 
@@ -45,7 +45,7 @@ class TestUIJS extends BaseUIJC {
     @DisplayName("Добавление нового вопроса")
     void addNewQuestion() {
         QuestionPage question = new QuestionPage(webDriver);
-        String randomWords = TestData.makeWords();
+        String randomWords = FAKER.lorem().sentence(5);
 
         basePage.waitLoading();
 
@@ -66,7 +66,7 @@ class TestUIJS extends BaseUIJC {
     @DisplayName("Добавление нового квиза")
     void addNewQuiz() {
         QuizPage quiz = new QuizPage(webDriver);
-        String randomWords = TestData.makeWords();
+        String randomWords = FAKER.lorem().sentence(5);
 
         basePage.waitLoading();
 
@@ -88,7 +88,7 @@ class TestUIJS extends BaseUIJC {
     @DisplayName("Добавление нового модуля")
     void addNewModule() {
         ModulePage module = new ModulePage(webDriver);
-        String randomWords = TestData.makeWords();
+        String randomWords = FAKER.lorem().sentence(5);
 
         basePage.waitLoading();
 
@@ -109,11 +109,30 @@ class TestUIJS extends BaseUIJC {
     @DisplayName("Создание нового курса")
     void addNewCurse(){
 
+
     }
-    //todo воспользоваться Гуглдоком!!! и Параметризовать
-    @Test
+
+    @ParameterizedTest
     @DisplayName("Создание нового пользователя")
-    void addNewUser(){
+    @CsvFileSource(resources = "testDataUsers.csv")
+    void addNewUser(
+            String name,
+            String surname,
+            String email,
+            String login,
+            String password,
+            String roles,
+            String isCV,
+            String searchOpen,
+            String searchStatus){
+
+        UserPage user = new UserPage(webDriver);
+
+        basePage.waitLoading();
+        root.clickOnUserLink();
+
+        user.addNewClick()
+        .createUser(name,surname,email,login,password,roles,isCV, searchOpen,searchStatus);
 
     }
     @Test
@@ -127,8 +146,20 @@ class TestUIJS extends BaseUIJC {
 
     }
     //todo воспользоваться Гуглдоком!!! и Параметризовать
-    @Test
+    @ParameterizedTest
     @DisplayName("Редактирование интервью")
-    void editInterview() {}
+    @CsvFileSource(resources = "testDataInterview.csv")
+    //название, дата, тип, оценка, ссылка
+    void editInterview(String name, String date, String type, String grade, String link) {
+
+        InterviewPage interview = new InterviewPage(webDriver);
+
+        basePage.waitLoading();
+        root.clickOnInterviewLink();
+        basePage.waitLoading();
+
+        interview.edit(name,date,type,grade,link);
+
+    }
 
 }
