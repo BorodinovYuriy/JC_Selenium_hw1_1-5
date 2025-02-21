@@ -1,29 +1,33 @@
 package tests.javacode.test;
 
 import lombok.extern.slf4j.Slf4j;
-import org.ex.config.TimingExtension;
-import org.ex.pages.base.BeforeLogin;
+import tests.javacode.helpers.Extension;
 import org.ex.pages.pages.*;
-import org.ex.pages.pages.razvitie.itk.academy.RecordingPages;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.WindowType;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import tests.javacode.base.BaseUIJC;
+import tests.javacode.helpers.ScreenshotExtension;
 
 import java.util.List;
 
+
+
 import static org.ex.utils.base.StaticBaseUtils.FAKER;
 
-@ExtendWith(TimingExtension.class)
+@ExtendWith(Extension.class)
+@ExtendWith(ScreenshotExtension.class)
 @Slf4j
 class TestUIJS extends BaseUIJC {
+
+    @Test
+    void test(){
+        Assertions.assertTrue(1==2);
+    }
 
     @Test
     @DisplayName("Добавление нового интервью")
@@ -145,32 +149,32 @@ class TestUIJS extends BaseUIJC {
 
         interview.edit(name,date,type,grade,link);
     }
-    @Test
-    @DisplayName("Создание голосовой записи")
-    void addNewVoiceRecording(){
-        WebDriver newWebDriver = new FirefoxDriver();
-        newWebDriver.switchTo().newWindow(WindowType.TAB);
-/*
-Так как я на FireFox - на сайте при клике-запись - баг! (продолжить не могу)
-это просто пример на старом UI - проде...
-
-...так - потренить переход по окнам \(0_0)/
- */
-        newWebDriver.get("https://razvitie.itk.academy/main");
-
-        BeforeLogin before = new BeforeLogin(newWebDriver);
-        RecordingPages rec = new RecordingPages(newWebDriver);
-
-        before.sleepSec(1);
-        before.login();
-        before.sleepSec(1);
-        rec.checkRecording();
-
-        newWebDriver.close();
-
-        String originalWindow = getWebDriver().getWindowHandles().iterator().next(); // Используем getWebDriver()
-        getWebDriver().switchTo().window(originalWindow); // Используем getWebDriver()
-    }
+//    @Test
+//    @DisplayName("Создание голосовой записи")
+//    void addNewVoiceRecording(){
+//        WebDriver newWebDriver = new FirefoxDriver();
+//        newWebDriver.switchTo().newWindow(WindowType.TAB);
+///*
+//Так как я на FireFox - на сайте при клике-запись - баг! (продолжить не могу)
+//это просто пример на старом UI - проде...
+//
+//...так - потренить переход по окнам \(0_0)/
+// */
+//        newWebDriver.get("https://razvitie.itk.academy/main");
+//
+//        BeforeLogin before = new BeforeLogin(newWebDriver);
+//        RecordingPages rec = new RecordingPages(newWebDriver);
+//
+//        before.sleepSec(1);
+//        before.login();
+//        before.sleepSec(1);
+//        rec.checkRecording();
+//
+//        newWebDriver.close();
+//
+//        String originalWindow = getWebDriver().getWindowHandles().iterator().next(); // Используем getWebDriver()
+//        getWebDriver().switchTo().window(originalWindow); // Используем getWebDriver()
+//    }
     @Test
     @DisplayName("Добавление нового модуля с вопросом")
     void addNewModuleAddQuestion() {

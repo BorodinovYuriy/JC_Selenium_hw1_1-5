@@ -1,4 +1,4 @@
-package org.ex.config;
+package tests.javacode.helpers;
 
 import org.junit.jupiter.api.extension.*;
 import org.slf4j.Logger;
@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 import java.time.Instant;
 import java.time.Duration;
 
-public class TimingExtension implements BeforeEachCallback, AfterEachCallback {
+public class Extension implements BeforeEachCallback, AfterEachCallback {
 
-    private static final Logger logger = LoggerFactory.getLogger(TimingExtension.class);
+    private static final Logger logger = LoggerFactory.getLogger(Extension.class);
 
     private static final String START_TIME = "start time";
 

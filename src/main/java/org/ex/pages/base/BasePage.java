@@ -25,7 +25,6 @@ public class BasePage {
 
     private final By rows;
 
-    private final By pagination;
 
     public BasePage(WebDriver webDriver){
         this.webDriver = webDriver;
@@ -39,7 +38,6 @@ public class BasePage {
         this.rows =  By.xpath("//div[@class = 'table-responsive']//tbody/tr");
         this.createButton = By.xpath("//div[@class = 'modalContent afade']//button[text() = 'Создать']");
         this.addButton = By.xpath("//button[@type = 'button' and text() = '+ Добавить']");
-        this.pagination = By.xpath("//ul[@class='pagination']");
     }
 
     public void openPage(){
