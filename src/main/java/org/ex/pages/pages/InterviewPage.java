@@ -31,11 +31,7 @@ public class InterviewPage extends BasePage {
     @FindBy(xpath = "//small[text() = 'Тип']/parent::div//select")
     private WebElement type;
 
-//    @FindBy(xpath = "//small[text() = 'Тип']/parent::div//select/option[@value = 'HR']")
-//    private WebElement hr;
-//
-//    @FindBy(xpath = "//small[text() = 'Тип']/parent::div//select/option[@value = 'tech']")
-//    private WebElement tech;
+
 
     @FindBy(xpath = "//textarea[@placeholder = 'Собственная оценка интервью']")
     private WebElement grade;

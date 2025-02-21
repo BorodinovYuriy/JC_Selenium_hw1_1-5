@@ -48,9 +48,7 @@ public class BaseUIJC {
                 "Не удалось загрузить стартовую страницу");
 
         BeforeLogin before = new BeforeLogin(webDriver);
-        before.getLoginField().sendKeys(PropertiesLoader.getUsername());
-        before.getPasswordField().sendKeys(PropertiesLoader.getPassword());
-        before.getLoginButton().click();
+        before.login();
 
         WebElement profile = webDriver.findElement(By.xpath("//div[@class = 'menuProfile']"));
         Assertions.assertNotNull(profile,"Профиль администратора не загрузился!");

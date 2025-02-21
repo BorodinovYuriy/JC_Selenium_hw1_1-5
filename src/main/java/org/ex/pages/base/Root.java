@@ -22,6 +22,12 @@ public class Root extends BasePage {
     @FindBy(xpath = "//a[@href ='/users' and text() = 'Пользователи']")
     private WebElement userLink;
 
+    @FindBy(xpath = "//a[@href ='/exams' and text() = 'Экзамены']")
+    private WebElement examLink;
+
+    @FindBy(xpath = "//a[@href ='/course' and text() = 'Курсы']")
+    private WebElement curseLink;
+
     public Root(WebDriver webDriver) {
         super(webDriver);
         PageFactory.initElements(webDriver, this);
@@ -42,5 +48,11 @@ public class Root extends BasePage {
     public void clickOnUserLink() {
         sleepSec(1);
         userLink.click();
+    }
+    public void clickOnExamLink() {
+        examLink.click();
+    }
+    public void clickOnCurseLink() {
+        curseLink.click();
     }
 }

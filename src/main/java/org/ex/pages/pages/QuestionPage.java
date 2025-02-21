@@ -11,7 +11,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class QuestionPage extends BasePage {
 
     @FindBy(xpath = "//div[@class = 'w-md-editor-text']/textarea")
-    WebElement textArea;
+    private WebElement textArea;
+
+    @FindBy(xpath = "(//td)[13]")
+    private WebElement questionFirstId;
 
     public QuestionPage(WebDriver webDriver) {
         super(webDriver);
@@ -28,5 +31,8 @@ public class QuestionPage extends BasePage {
                 .visibilityOf(textArea)).sendKeys(question);
         clickOnCreateButton();
         return this;
+    }
+    public String getQuestionFirstId() {
+        return questionFirstId.getText();
     }
 }

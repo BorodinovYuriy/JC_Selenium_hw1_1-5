@@ -2,6 +2,7 @@ package org.ex.pages.base;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.ex.config.PropertiesLoader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,5 +23,11 @@ public class BeforeLogin extends BasePage {
     public BeforeLogin(WebDriver webDriver) {
         super(webDriver);
         PageFactory.initElements(webDriver, this);
+    }
+
+    public void login() {
+        getLoginField().sendKeys(PropertiesLoader.getUsername());
+        getPasswordField().sendKeys(PropertiesLoader.getPassword());
+        getLoginButton().click();
     }
 }
