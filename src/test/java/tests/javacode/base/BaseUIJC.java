@@ -1,7 +1,6 @@
 package tests.javacode.base;
 
 import lombok.extern.slf4j.Slf4j;
-import org.ex.config.PropertiesLoader;
 import org.ex.config.WaitingConfig;
 import org.ex.pages.base.BasePage;
 import org.ex.pages.base.BeforeLogin;

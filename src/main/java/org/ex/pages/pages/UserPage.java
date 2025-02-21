@@ -1,5 +1,6 @@
 package org.ex.pages.pages;
 
+import lombok.extern.slf4j.Slf4j;
 import org.ex.pages.base.BasePage;
 import org.ex.utils.creators.forall.DateCreator;
 import org.ex.utils.creators.usercreators.*;
@@ -7,8 +8,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-
+@Slf4j
 public class UserPage extends BasePage {
 
     /**
@@ -47,6 +49,18 @@ public class UserPage extends BasePage {
 
     @FindBy(xpath = "//div[@class='ib'][.//small[text()='Статус поиска']]//button[4]")
     private WebElement searchStatusOnProject;
+
+    @FindBy(xpath = "(//td)[2]")
+    private WebElement firstLogin;
+
+    @FindBy(xpath = "(//button[text()='Сохранить'])[1]")
+    private WebElement saveButton;
+
+    @FindBy(xpath = "//a[@class = 'back-link pull-left']")
+    private WebElement backLink;
+
+    @FindBy(xpath = "(//td)[12]")
+    private WebElement waitTD;
 
 
     public UserPage(WebDriver webDriver) {
@@ -103,5 +117,17 @@ public class UserPage extends BasePage {
         if (setSearchOpen != null) this.searchOpen.sendKeys(setSearchOpen);
 
         clickOnCreateButton();
+    }
+
+    public boolean editCheck(String newLogin) {
+        firstLogin.click();
+        login.clear();
+        login.sendKeys(newLogin);
+        saveButton.click();
+        backLink.click();
+        waitIt.until(ExpectedConditions.visibilityOf(waitTD));
+
+        return newLogin.equals(firstLogin.getText());
+
     }
 }

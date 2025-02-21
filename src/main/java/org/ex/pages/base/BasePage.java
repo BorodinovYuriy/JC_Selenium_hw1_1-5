@@ -6,7 +6,6 @@ import org.ex.config.WaitingConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -26,6 +25,8 @@ public class BasePage {
 
     private final By rows;
 
+    private final By pagination;
+
     public BasePage(WebDriver webDriver){
         this.webDriver = webDriver;
         this.baseUrl = PropertiesLoader.getBaseURI();
@@ -38,6 +39,7 @@ public class BasePage {
         this.rows =  By.xpath("//div[@class = 'table-responsive']//tbody/tr");
         this.createButton = By.xpath("//div[@class = 'modalContent afade']//button[text() = 'Создать']");
         this.addButton = By.xpath("//button[@type = 'button' and text() = '+ Добавить']");
+        this.pagination = By.xpath("//ul[@class='pagination']");
     }
 
     public void openPage(){
@@ -52,7 +54,7 @@ public class BasePage {
     public void clickOnCreateButton(){
         waitIt.until(ExpectedConditions.elementToBeClickable(createButton)).click();
     }
-    public boolean checkCreate(List<WebElement> list, String wordContains) {
+    public boolean editQuiz(List<WebElement> list, String wordContains) {
         return list.stream()
                 .anyMatch(
                         webElement -> webElement
@@ -69,4 +71,5 @@ public class BasePage {
             log.error("Остановка потока не удалась: {}", e.getMessage());
         }
     }
+
 }

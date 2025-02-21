@@ -16,6 +16,20 @@ public class QuestionPage extends BasePage {
     @FindBy(xpath = "(//td)[13]")
     private WebElement questionFirstId;
 
+    @FindBy(xpath = "(//td)[1]")
+    private WebElement questionNameLink;
+
+    @FindBy(xpath = "(//button[contains(text(), 'Выпустить:')])[1]")
+    private WebElement versionAddButton;
+
+    @FindBy(xpath = "//a[@href = '/theme-question' and text() = 'Вопросы']")
+    private WebElement questionLink;
+
+    @FindBy(xpath = "(//td)[14]")
+    private WebElement load;
+
+
+
     public QuestionPage(WebDriver webDriver) {
         super(webDriver);
         PageFactory.initElements(webDriver, this);
@@ -34,5 +48,16 @@ public class QuestionPage extends BasePage {
     }
     public String getQuestionFirstId() {
         return questionFirstId.getText();
+    }
+
+    public boolean editQuizVersion(String randomWords) {
+        questionNameLink.click();
+        textArea.clear();
+        textArea.sendKeys(randomWords);
+        versionAddButton.click();
+        questionLink.click();
+
+        waitIt.until(ExpectedConditions.visibilityOf(load));
+        return randomWords.equals(questionNameLink.getText());
     }
 }

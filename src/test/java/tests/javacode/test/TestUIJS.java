@@ -39,7 +39,7 @@ class TestUIJS extends BaseUIJC {
                 .getRows();
 
         Assertions.assertTrue(
-                interview.checkCreate(createdNewInterview,randomWords),
+                interview.editQuiz(createdNewInterview,randomWords),
                 "Созданного интервью не найдено в списке интервью на странице!");
 
         log.info("Добавление нового интервью - passed");
@@ -60,7 +60,7 @@ class TestUIJS extends BaseUIJC {
                 .getRows();
 
         Assertions.assertTrue(
-                question.checkCreate(createdNewQuestion,randomWords),
+                question.editQuiz(createdNewQuestion,randomWords),
                 "Созданного вопроса не найдено в списке вопросов на странице!");
 
         log.info("Добавление нового вопроса - passed");
@@ -81,7 +81,7 @@ class TestUIJS extends BaseUIJC {
                 .getRows();
 
         Assertions.assertTrue(
-                quiz.checkCreate(createdNewQuiz,randomWords),
+                quiz.editQuiz(createdNewQuiz,randomWords),
                 "Созданного квиза не найдено в списке квизов на странице!");
 
         log.info("Добавление нового квиза - passed");
@@ -181,13 +181,13 @@ class TestUIJS extends BaseUIJC {
 
         root.clickOnModuleLink();
 
-        List<WebElement> createdNewQuiz = module
+        List<WebElement> createdNew = module
                 .addNewClick()
                 .createModule(randomWords,questionId)
                 .getRows();
 
         Assertions.assertTrue(
-                module.checkCreate(createdNewQuiz,randomWords),
+                module.editQuiz(createdNew,randomWords),
                 "Созданного модуля не найдено в списке модулей на странице!");
 
         log.info("Добавление нового модуля с вопросом - passed");
@@ -206,7 +206,7 @@ class TestUIJS extends BaseUIJC {
         root.clickOnExamLink();
 
         Assertions.assertTrue(exam.addNewAndCheck(questionId),
-                "Название отредактированного экзамена и экзамена в общем списке - не совпадают!");
+                "Название экзамена и экзамена в общем списке - не совпадают!");
     }
 
 
@@ -241,15 +241,87 @@ class TestUIJS extends BaseUIJC {
 
         root.clickOnModuleLink();
 
-        List<WebElement> createdNewQuiz = module
+        List<WebElement> createdNew = module
                 .addNewClick()
                 .createModule(randomWords)
                 .getRows();
 
         Assertions.assertTrue(
-                module.checkCreate(createdNewQuiz,randomWords),
+                module.editQuiz(createdNew,randomWords),
                 "Созданного модуля не найдено в списке модулей на странице!");
 
-        log.info("Добавление нового модуля - passed");
+        log.info("Добавление нового модуля (без_вопроса) - passed");
     }
+
+    @Test
+    @DisplayName("Редактирование ранее созданного пользователя (переход по Логину)")
+    void editUser() {
+        UserPage user = new UserPage(webDriver);
+        String randomWords = FAKER.lorem().sentence(1);
+
+        root.clickOnUserLink();
+        basePage.waitLoading();
+
+
+        Assertions.assertTrue(user.editCheck(randomWords),
+                "Пользователь с изменённым Логином не найден в общем списке!");
+    }
+
+    @Test
+    @DisplayName("Редактирование ранее созданного квиза (переход по названию)")
+    void editQuiz() {
+        QuizPage quiz = new QuizPage(webDriver);
+        String randomWords = FAKER.lorem().sentence(5);
+
+        basePage.waitLoading();
+        root.clickOnQuizLink();
+
+        Assertions.assertTrue(
+                quiz.editQuiz(randomWords),
+                "Созданного квиза не найдено в списке квизов на странице!");
+
+        log.info("Редактирование ранее созданного квиза (переход по названию) - passed");
+    }
+
+    @Test
+    @DisplayName("Редактирование вопроса - версионирование (переход по названию)")
+    void editQuestion(){
+        QuestionPage question = new QuestionPage(webDriver);
+        String randomWords = FAKER.lorem().sentence(5);
+
+        basePage.waitLoading();
+
+        root.clickOnQuestionLink();
+
+        basePage.waitLoading();
+
+        Assertions.assertTrue(
+                question.editQuizVersion(randomWords),
+                "Вопроса не найдено в списке вопросов на странице!");
+
+        log.info("Редактирование вопроса - версионирование (переход по названию) - passed");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
