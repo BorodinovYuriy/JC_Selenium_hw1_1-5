@@ -11,8 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WindowType;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import tests.javacode.base.BaseUIJC;
 
 import java.util.List;
@@ -26,7 +28,7 @@ class TestUIJS extends BaseUIJC {
     @Test
     @DisplayName("Добавление нового интервью")
     void addNewInterview() {
-        InterviewPage interview = new InterviewPage(webDriver);
+        InterviewPage interview = new InterviewPage(getWebDriver());
         String randomWords = FAKER.lorem().sentence(5);
 
         basePage.waitLoading();
@@ -47,7 +49,7 @@ class TestUIJS extends BaseUIJC {
     @Test
     @DisplayName("Добавление нового вопроса")
     void addNewQuestion() {
-        QuestionPage question = new QuestionPage(webDriver);
+        QuestionPage question = new QuestionPage(getWebDriver()); // Используем getWebDriver()
         String randomWords = FAKER.lorem().sentence(5);
 
         basePage.waitLoading();
@@ -68,7 +70,7 @@ class TestUIJS extends BaseUIJC {
     @Test
     @DisplayName("Добавление нового квиза")
     void addNewQuiz() {
-        QuizPage quiz = new QuizPage(webDriver);
+        QuizPage quiz = new QuizPage(getWebDriver()); // Используем getWebDriver()
         String randomWords = FAKER.lorem().sentence(5);
 
         basePage.waitLoading();
@@ -89,11 +91,11 @@ class TestUIJS extends BaseUIJC {
 
     @Test
     @DisplayName("Создание нового курса")
-    //Написано норм, но пока на проде -504я
-    // - тест не может дождаться элемента и кликает "Создать" впустую....
+        //Написано норм, но пока на проде -504я
+        // - тест не может дождаться элемента и кликает "Создать" впустую....
     void addNewCurse(){
-        ModulePage module = new ModulePage(webDriver);
-        CursePage curse = new CursePage(webDriver);
+        ModulePage module = new ModulePage(getWebDriver()); // Используем getWebDriver()
+        CursePage curse = new CursePage(getWebDriver()); // Используем getWebDriver()
 
         basePage.waitLoading();
         root.clickOnModuleLink();
@@ -119,23 +121,23 @@ class TestUIJS extends BaseUIJC {
             String searchOpen,
             String searchStatus){
 
-        UserPage user = new UserPage(webDriver);
+        UserPage user = new UserPage(getWebDriver()); // Используем getWebDriver()
 
         basePage.waitLoading();
         root.clickOnUserLink();
 
         user.addNewClick()
-        .createUser(name,surname,email,login,password,roles,isCV, searchOpen,searchStatus);
+                .createUser(name,surname,email,login,password,roles,isCV, searchOpen,searchStatus);
 
     }
 
     @ParameterizedTest
     @DisplayName("Редактирование интервью")
     @CsvFileSource(resources = "testDataInterview.csv")
-    //название, дата, тип, оценка, ссылка
+        //название, дата, тип, оценка, ссылка
     void editInterview(String name, String date, String type, String grade, String link) {
 
-        InterviewPage interview = new InterviewPage(webDriver);
+        InterviewPage interview = new InterviewPage(getWebDriver()); // Используем getWebDriver()
 
         basePage.waitLoading();
         root.clickOnInterviewLink();
@@ -146,33 +148,34 @@ class TestUIJS extends BaseUIJC {
     @Test
     @DisplayName("Создание голосовой записи")
     void addNewVoiceRecording(){
-        webDriver.switchTo().newWindow(WindowType.TAB);
+        WebDriver newWebDriver = new FirefoxDriver();
+        newWebDriver.switchTo().newWindow(WindowType.TAB);
 /*
 Так как я на FireFox - на сайте при клике-запись - баг! (продолжить не могу)
 это просто пример на старом UI - проде...
 
 ...так - потренить переход по окнам \(0_0)/
  */
-        webDriver.get("https://razvitie.itk.academy/main");
+        newWebDriver.get("https://razvitie.itk.academy/main");
 
-        BeforeLogin before = new BeforeLogin(webDriver);
-        RecordingPages rec = new RecordingPages(webDriver);
+        BeforeLogin before = new BeforeLogin(newWebDriver);
+        RecordingPages rec = new RecordingPages(newWebDriver);
 
         before.sleepSec(1);
         before.login();
         before.sleepSec(1);
         rec.checkRecording();
 
-        webDriver.close();
+        newWebDriver.close();
 
-        String originalWindow = webDriver.getWindowHandles().iterator().next();
-        webDriver.switchTo().window(originalWindow);
+        String originalWindow = getWebDriver().getWindowHandles().iterator().next(); // Используем getWebDriver()
+        getWebDriver().switchTo().window(originalWindow); // Используем getWebDriver()
     }
     @Test
     @DisplayName("Добавление нового модуля с вопросом")
     void addNewModuleAddQuestion() {
-        QuestionPage question = new QuestionPage(webDriver);
-        ModulePage module = new ModulePage(webDriver);
+        QuestionPage question = new QuestionPage(getWebDriver()); // Используем getWebDriver()
+        ModulePage module = new ModulePage(getWebDriver()); // Используем getWebDriver()
         String randomWords = FAKER.lorem().sentence(5);
 
         basePage.waitLoading();
@@ -196,8 +199,8 @@ class TestUIJS extends BaseUIJC {
     @Test
     @DisplayName("Создание нового экзамена")
     void addNewExam(){
-        ExamPage exam = new ExamPage(webDriver);
-        QuestionPage question = new QuestionPage(webDriver);
+        ExamPage exam = new ExamPage(getWebDriver()); // Используем getWebDriver()
+        QuestionPage question = new QuestionPage(getWebDriver()); // Используем getWebDriver()
 
         basePage.waitLoading();
         root.clickOnQuestionLink();
@@ -222,7 +225,7 @@ class TestUIJS extends BaseUIJC {
     @Test
     @DisplayName("Редактирование экзамена (по нажатию на id)")
     void editExam(){
-        ExamPage exam = new ExamPage(webDriver);
+        ExamPage exam = new ExamPage(getWebDriver()); // Используем getWebDriver()
         basePage.waitLoading();
         root.clickOnExamLink();
 
@@ -234,7 +237,7 @@ class TestUIJS extends BaseUIJC {
     @Test
     @DisplayName("Добавление нового модуля (без_вопроса)")
     void addNewModule() {
-        ModulePage module = new ModulePage(webDriver);
+        ModulePage module = new ModulePage(getWebDriver()); // Используем getWebDriver()
         String randomWords = FAKER.lorem().sentence(5);
 
         basePage.waitLoading();
@@ -256,7 +259,7 @@ class TestUIJS extends BaseUIJC {
     @Test
     @DisplayName("Редактирование ранее созданного пользователя (переход по Логину)")
     void editUser() {
-        UserPage user = new UserPage(webDriver);
+        UserPage user = new UserPage(getWebDriver()); // Используем getWebDriver()
         String randomWords = FAKER.lorem().sentence(1);
 
         root.clickOnUserLink();
@@ -270,7 +273,7 @@ class TestUIJS extends BaseUIJC {
     @Test
     @DisplayName("Редактирование ранее созданного квиза (переход по названию)")
     void editQuiz() {
-        QuizPage quiz = new QuizPage(webDriver);
+        QuizPage quiz = new QuizPage(getWebDriver()); // Используем getWebDriver()
         String randomWords = FAKER.lorem().sentence(5);
 
         basePage.waitLoading();
@@ -286,7 +289,7 @@ class TestUIJS extends BaseUIJC {
     @Test
     @DisplayName("Редактирование вопроса - версионирование (переход по названию)")
     void editQuestion(){
-        QuestionPage question = new QuestionPage(webDriver);
+        QuestionPage question = new QuestionPage(getWebDriver()); // Используем getWebDriver()
         String randomWords = FAKER.lorem().sentence(5);
 
         basePage.waitLoading();
@@ -301,27 +304,4 @@ class TestUIJS extends BaseUIJC {
 
         log.info("Редактирование вопроса - версионирование (переход по названию) - passed");
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -28,7 +28,7 @@ public class BeforeLogin extends BasePage {
     public void login() {
         getLoginField().sendKeys(PropertiesLoader.getUsername());
         getPasswordField().sendKeys(PropertiesLoader.getPassword());
-        sleepSec(1);//глюки сайта
+        sleepSec(2);//глюки сайта
         getLoginButton().click();
     }
 }

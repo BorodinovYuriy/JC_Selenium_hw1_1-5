@@ -5,10 +5,7 @@ import org.ex.config.WaitingConfig;
 import org.ex.pages.base.BasePage;
 import org.ex.pages.base.BeforeLogin;
 import org.ex.pages.base.Root;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,15 +13,20 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 @Slf4j
 public class BaseUIJC {
-    protected static WebDriver webDriver;
+    private static ThreadLocal<WebDriver> webDriverThreadLocal = new ThreadLocal<>();
+
+    protected static WebDriver getWebDriver() {
+        return webDriverThreadLocal.get();
+    }
+
     protected static BasePage basePage;
     protected static Root root;
 
-    @BeforeAll
+    @BeforeEach  // Изменено на BeforeEach
     @DisplayName("Авторизация на портале")
-    public static void setup() {
-
-        webDriver = new FirefoxDriver();
+    public void setup() {
+        WebDriver webDriver = new FirefoxDriver();
+        webDriverThreadLocal.set(webDriver); // Сохраняем WebDriver в ThreadLocal
 
         webDriver.manage().timeouts()
                 .implicitlyWait(WaitingConfig.IMPLICIT_WAIT.getDuration());
@@ -37,7 +39,8 @@ public class BaseUIJC {
         before();
     }
 
-    private static void before() {
+    private void before() { //Убрали static
+        WebDriver webDriver = getWebDriver(); // Получаем WebDriver из ThreadLocal
         basePage = new BasePage(webDriver);
         root = new Root(webDriver);
         basePage.openPage();
@@ -50,15 +53,17 @@ public class BaseUIJC {
         before.login();
 
         WebElement profile = webDriver.findElement(By.xpath("//div[@class = 'menuProfile']"));
-        Assertions.assertNotNull(profile,"Профиль администратора не загрузился!");
+        Assertions.assertNotNull(profile, "Профиль администратора не загрузился!");
         log.info("Авторизация на портале - passed");
     }
 
-    @AfterAll
-    public static void tearDown() {
+    @AfterEach   // Изменено на AfterEach
+    public void tearDown() {
+        WebDriver webDriver = webDriverThreadLocal.get();
         if (webDriver != null) {
             webDriver.quit();
             log.info("Закрытие ресурсов выполнено _ @AfterAll");
         }
+        webDriverThreadLocal.remove(); // Очищаем ThreadLocal
     }
 }
